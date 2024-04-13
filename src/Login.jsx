@@ -1,14 +1,19 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const  navigate = useNavigate();
 
     const handleSubmit= (e) => {
         e.preventDefault();
         axios.post('http://localhost:3001/login', {email, password})
-        .then(result=> console.log(result))
+        .then(result=> {console.log(result)
+        if (result.data === "Success"){
+            navigate('/register');
+        }})
         .catch(error=>(console.log(error)))
     }
     return ( 
@@ -41,7 +46,7 @@ function Login() {
                             onChange={(e) => {setPassword(e.target.value)}}
                             />
                     </div>
-                    <button type="submit" className='btn btn-success w-100 rounded-0'>Register</button>
+                    <Link to="/home"><button type="submit" className='btn btn-default border w-100 rounded-0'>Login</button></Link>
                     </form>
             </div>
 
